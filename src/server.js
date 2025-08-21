@@ -1,7 +1,11 @@
 const express= require('express');
 const app=express();
 const http=require('http');
-const server=
+
+
+const{Server}=require('socket.io');
+const server=http.createServer(app);
+const io = new Server(server);
 
 
 
@@ -9,7 +13,14 @@ app.get('/',(req,res)=>{
     res.sendFile(__dirname+'/index.html');
 })
 
+io.on('connection', (socket) => {
+    console.log('A user connected',socket.id);
+    socket.on('disconnected',()=>{
+        console.log('A user is Disconnected',socket.id);
+    })
+   
+});
 
-app.listen(2001,()=>{
+server.listen(2001,()=>{
     console.log("Application running")
 })
