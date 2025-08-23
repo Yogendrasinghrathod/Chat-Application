@@ -12,6 +12,7 @@ const myRoute=require('./routes/myRoute')
 
 
 app.use(myRoute);
+app.use(express.static('frontend'))
 io.on('connection',(socket)=>{
     console.log("User Connected");
     socket.on('disconnect',()=>{
